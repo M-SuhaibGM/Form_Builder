@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Toaster } from "sonner";
 import "./globals.css";
+import AppShell from "@/components/AppShell";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,7 +26,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+
+      <body className="min-h-full flex flex-col">
+        <Suspense fallback={null}>
+          <AppShell>{children}</AppShell>
+        </Suspense>
+        <Toaster richColors position="top-right" />
+      </body>
+
     </html>
   );
 }
